@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+    wrm-server:
+        image: nginx:1.27.3-alpine
+        container_name: wrm-server
+        ports:
+            - '${NGINX_PORT}:80'
+        networks:
+            - wrm
+        volumes:
+            - ../:/home/backend
+            - ./config/nginx/conf:/etc/nginx/conf.d
+        depends_on:
+            - wrm-php
+
+    wrm-php:
+        build:
+            args:
+                user: ${DOCKER_USER}
+                uid: ${UID}
+            context: ./sources/php-fpm
+            dockerfile: Dockerfile
+        container_name: wrm-php
+        networks:
+            - wrm
+        volumes:
+            - ../:/home/backend
+            - ./config/php/php.ini:/etc/php/8.4/fpm/php.ini
+
+    wrm-mysql:
+        image: 'mysql:9.1'
+        container_name: wrm-mysql
+        command: mysqld --sql_mode="NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES"
+        ports:
+            - '${MYSQL_PORT}:3306'
+        networks:
+            - wrm
+        volumes:
+            - ./volumes/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+    wrm-redis:
+        image: bitnami/redis:7.4.1
+        container_name: wrm-redis
+        environment:
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
+        networks:
+            - wrm
+        ports:
+            - '${REDIS_PORT}:6379'
+
+networks:
+    wrm:
+        driver: bridge
