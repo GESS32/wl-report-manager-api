@@ -10,7 +10,14 @@ return new class extends Migration
     {
         Schema::create('users', static function (Blueprint $table): void {
             $table->id();
-            // @TODO: Add columns here
+            $table->string('uuid', 191)->index();
+            $table->string('nickname', 32)->nullable();
+            $table->string('password')->nullable();
+            $table->unsignedSmallInteger('role');
+            $table->unsignedSmallInteger('grade');
+            $table->float('experience');
+            $table->json('responsibilities');
+            $table->json('permissions')->nullable();
             $table->timestamps();
         });
     }
