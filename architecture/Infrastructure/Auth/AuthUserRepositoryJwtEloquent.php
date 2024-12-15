@@ -17,7 +17,7 @@ use Architecture\Domains\Auth\ValueObjects\Permission;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AuthRepositoryJwtEloquent implements AuthRepositoryInterface
+class AuthUserRepositoryJwtEloquent implements AuthRepositoryInterface
 {
     /** @var \Tymon\JWTAuth\JWT|\Tymon\JWTAuth\JWTAuth */
     private mixed $jwt;
