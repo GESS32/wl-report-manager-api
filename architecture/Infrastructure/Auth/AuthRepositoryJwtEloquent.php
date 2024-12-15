@@ -41,7 +41,7 @@ class AuthRepositoryJwtEloquent implements AuthRepositoryInterface
             $user = Auth::user();
             $entity = $this->getEntityFromUser($user);
 
-            foreach ($user->permissions as $key => $description) {
+            foreach ($user->permissions ?? [] as $key => $description) {
                 $entity->permissions->assign(new Permission($key, $description));
             }
         }
@@ -61,7 +61,8 @@ class AuthRepositoryJwtEloquent implements AuthRepositoryInterface
 
     public function getToken(): ?string
     {
-        return $this->jwt->getToken()?->get();
+        return $this->jwt->getToken()?->get()
+            ?? $this->jwt->fromUser(Auth::user());
     }
 
     public function refreshToken(): ?string

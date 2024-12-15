@@ -33,6 +33,7 @@ class User extends Authenticatable implements JWTSubject
 
     /** @var string[] */
     protected $hidden = [
+        'id',
         'password',
     ];
 
@@ -45,17 +46,13 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function getJWTIdentifier(): string
+    public function getJWTIdentifier(): int
     {
-        return $this->uuid;
+        return $this->id;
     }
 
     public function getJWTCustomClaims(): array
     {
-        return [
-            'uuid' => $this->uuid,
-            'nickname' => $this->nickname,
-            'permissions' => $this->permissions,
-        ];
+        return [];
     }
 }
