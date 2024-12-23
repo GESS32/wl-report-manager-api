@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Architecture\Application\Report;
+
+use Architecture\Domains\Prompt\Entities\Report;
+use Architecture\Domains\Prompt\Repositories\ReportRepositoryInterface;
+use Architecture\Domains\Prompt\Translators\TranslatorInterface;
+use Architecture\Domains\User\Localizations\LocalizationInterface;
+use RuntimeException;
+
+readonly class CreateService
+{
+    public function __construct(
+        private ReportRepositoryInterface $repository,
+        private TranslatorInterface $translator,
+        private LocalizationInterface $localization
+    ) {}
+
+    /**
+     * @throws RuntimeException
+     */
+    public function execute(RequestDto $request): string
+    {
+        $report = new Report(
+            $this->translator,
+            $request->lang,
+            $request->user->getBio($this->localization),
+            $request->task,
+            $request->description,
+            $request->spendTime
+        );
+
+        $response = $this->repository->send($report);
+
+        if ($response->isFailure()) {
+            throw new RuntimeException('Failed to send report');
+        }
+
+        return $response->body;
+    }
+}

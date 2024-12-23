@@ -6,5 +6,5 @@ namespace Architecture\Domains\User\Localizations;
 
 interface LocalizationInterface
 {
-    public function translate(TranslatableInterface $translatable, string $language): string;
+    public function translate(TranslatableInterface $translatable): string;
 }
