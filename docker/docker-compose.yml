@@ -29,7 +29,7 @@ services:
             - ./config/php/php.ini:/etc/php/8.4/fpm/php.ini
 
     wrm-mysql:
-        image: 'mysql:9.1'
+        image: mysql:9.1
         container_name: wrm-mysql
         command: mysqld --sql_mode="NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES"
         ports:

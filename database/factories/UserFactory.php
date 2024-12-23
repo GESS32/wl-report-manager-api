@@ -4,43 +4,44 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Architecture\Domains\User\Enums\GradeEnum;
+use Architecture\Domains\User\Enums\ResponsibilitiesEnum;
+use Architecture\Domains\User\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
-
-    /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
-    }
+        $faker = fake();
+        $grades = array_map(static fn (GradeEnum $case): int => $case->value, GradeEnum::cases());
+        $roles = array_map(static fn (RoleEnum $case): int => $case->value, RoleEnum::cases());
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
-    public function unverified(): static
-    {
-        return $this->state(static fn (array $attributes): array => [
-            'email_verified_at' => null,
-        ]);
+        $responsibilities = array_map(
+            static fn (ResponsibilitiesEnum $case): int
+            => $case->value, ResponsibilitiesEnum::cases()
+        );
+
+        return [
+            'nickname' => $faker->userName(),
+            'uuid' => $faker->uuid(),
+            'password' => Hash::make('12345678'),
+            'role' => $faker->randomElement($roles),
+            'grade' => $faker->randomElement($grades),
+            'experience' => $faker->randomFloat(1, max: 10),
+            'responsibilities' => $faker->randomElements(
+                $responsibilities,
+                $faker->numberBetween(1, count($responsibilities))
+            ),
+            'permissions' => null,
+        ];
     }
 }

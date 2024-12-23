@@ -4,46 +4,55 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+/**
+ * @property-read int $id
+ * @property-read string $uuid
+ * @property string $nickname
+ * @property string $password
+ * @property int grade
+ * @property float experience
+ * @property int role
+ * @property array $responsibilities
+ * @property array $permissions
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ */
+class User extends Authenticatable implements JWTSubject
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    /** @var string[] */
     protected $fillable = [
-        'name',
-        'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    /** @var string[] */
     protected $hidden = [
+        'id',
         'password',
-        'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'responsibilities' => 'array',
+            'permissions' => 'array',
         ];
+    }
+
+    public function getJWTIdentifier(): int
+    {
+        return $this->id;
+    }
+
+    public function getJWTCustomClaims(): array
+    {
+        return [];
     }
 }
