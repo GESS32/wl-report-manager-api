@@ -22,11 +22,10 @@
 ---
 
 ## Code Architecture
-* [Laravel app](./app/readme.md)
-* [Domain Driven Design](./architecture/readme.md)
+* [Laravel app](https://laravel.com/docs/11.x/structure)
+* [Domain Driven Design](https://github.com/GESS32/ddd-in-laravel-skeleton)
 
 ---
 
 ## Wiki
-* [About Laravel framework](./wiki/laravel.md)
 * [Deploy project to a local environment](./wiki/setup-local-environment.md)
