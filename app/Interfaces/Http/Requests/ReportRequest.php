@@ -7,6 +7,7 @@ namespace App\Interfaces\Http\Requests;
 use Architecture\Application\Report\RequestDto;
 use Architecture\Domains\User\Entities\UserEntity;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReportRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class ReportRequest extends FormRequest
             'lang' => [
                 'required',
                 'string',
+                Rule::in(['en', 'ru']),
             ],
         ];
     }

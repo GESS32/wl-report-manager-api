@@ -7,6 +7,7 @@ namespace Architecture\Application\User;
 use Architecture\Domains\User\Entities\UserEntity;
 use Architecture\Domains\User\Enums\GradeEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
+use Architecture\Domains\User\Enums\SpecializationEnum;
 use Architecture\Domains\User\Exceptions\ExperienceInputException;
 use Architecture\Domains\User\Factories\UserIdentifierFactoryInterface;
 use Architecture\Domains\User\Repositories\UserRepositoryInterface;
@@ -26,12 +27,13 @@ readonly class CreateService
     public function execute(
         GradeEnum $grade,
         RoleEnum $role,
+        SpecializationEnum $specialization,
         float $experience,
         array $responsibilities = []
     ): UserEntity {
         $identifier = $this->factory->make();
         $rank = new Rank($grade, $experience);
-        $position = new Position($role, $responsibilities);
+        $position = new Position($role, $specialization, $responsibilities);
         $user = new UserEntity($identifier, $rank, $position);
 
         $this->repository->store($user);

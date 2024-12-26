@@ -17,11 +17,11 @@ class UserEntity
         public Position $position,
     ) {}
 
-    public function getBio(LocalizationInterface $localization): string
+    public function getBio(LocalizationInterface $localization, string $separator = '. ', ?string $lang = null): string
     {
-        return implode(', ', [
-            $localization->translate($this->position),
-            $localization->translate($this->rank),
+        return implode($separator, [
+            $localization->translate($this->position, $lang),
+            $localization->translate($this->rank, $lang),
         ]);
     }
 }

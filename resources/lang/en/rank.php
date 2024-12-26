@@ -4,16 +4,17 @@ use Architecture\Domains\User\Enums\GradeEnum;
 
 return [
     'grade' => [
-        GradeEnum::TRAINEE->value => 'trainee',
-        GradeEnum::TRAINEE_PLUS->value => 'trainee +',
-        GradeEnum::JUNIOR->value => 'junior',
-        GradeEnum::JUNIOR_PLUS->value => 'junior +',
-        GradeEnum::MIDDLE->value => 'middle',
-        GradeEnum::MIDDLE_PLUS->value => 'middle +',
-        GradeEnum::SENIOR->value => 'senior',
-        GradeEnum::SENIOR_PLUS->value => 'senior +',
-        GradeEnum::LEAD->value => 'team lead',
+        GradeEnum::TRAINEE->value => 'Trainee',
+        GradeEnum::TRAINEE_PLUS->value => 'Trainee +',
+        GradeEnum::JUNIOR->value => 'Junior',
+        GradeEnum::JUNIOR_PLUS->value => 'Junior +',
+        GradeEnum::MIDDLE->value => 'Middle',
+        GradeEnum::MIDDLE_PLUS->value => 'Middle +',
+        GradeEnum::SENIOR->value => 'Senior',
+        GradeEnum::SENIOR_PLUS->value => 'Senior +',
+        GradeEnum::LEAD->value => 'Team lead',
     ],
 
-    'experience' => 'with :experience year(s) experience',
+    'grade_label' => 'level',
+    'experience' => 'with :value year(s) experience',
 ];

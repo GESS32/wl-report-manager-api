@@ -12,9 +12,10 @@ use Illuminate\Routing\Controller;
 
 class ReportController extends Controller
 {
-    public function __invoke(ReportRequest $request, UserEntity $user, CreateService $service): JsonResponse
+    public function store(ReportRequest $request, UserEntity $user, CreateService $service): JsonResponse
     {
         $response = $service->execute($request->toDto($user));
+        dd($response);
         return new JsonResponse(['data' => $response]);
     }
 }

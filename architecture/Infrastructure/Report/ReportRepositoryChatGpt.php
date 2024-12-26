@@ -13,13 +13,24 @@ class ReportRepositoryChatGpt implements ReportRepositoryInterface
 {
     public function send(Report $report): PromptResponse
     {
-        $response = OpenAI::completions()->create([
+        dd((string) $report);
+
+        $response = OpenAI::chat()->create([
             'model' => config('openai.model'),
-            'prompt' => (string) $report,
+            'messages' => [
+                [
+                    'role' => 'system',
+                    'content' => 'You are a professional assistant for generating work reports in IT.'
+                ],
+                [
+                    'role' => 'user',
+                    'content' => (string) $report,
+                ],
+            ],
             'max_tokens' => config('openai.max_tokens'),
             'temperature' => config('openai.temperature'),
         ]);
 
-        return new PromptResponse($response['choices'][0]['text'], 200);
+        return new PromptResponse($response['choices'][0]['message']['content'], 200);
     }
 }

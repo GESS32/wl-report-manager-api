@@ -6,5 +6,5 @@ namespace Architecture\Domains\User\Localizations;
 
 interface TranslatableInterface
 {
-    public function getLocalizeRequest(): LocalizeRequest;
+    public function getLocalizeRequest(): LocalizeGroupRequest;
 }

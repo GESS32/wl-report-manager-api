@@ -33,7 +33,7 @@ return [
     |
     | The default model to use for completions.
     */
-    'model' => env('OPENAI_MODEL', 'text-davinci-003'),
+    'model' => env('OPENAI_MODEL', 'gpt-3.5-turbo'),
     'temperature' => env('OPENAI_TEMPERATURE', 0.7),
     'max_tokens' => env('OPENAI_MAX_TOKENS', 150),
 ];

@@ -4,16 +4,28 @@ declare(strict_types=1);
 
 namespace Architecture\Infrastructure\User;
 
+use App\Models\User;
 use Architecture\Domains\User\ValueObjects\Identifier;
 use Architecture\Domains\User\Entities\UserEntity;
 use Architecture\Domains\User\Repositories\UserRepositoryInterface;
+use Exception;
 
-class UserRepositoryEloquent implements UserRepositoryInterface
+readonly class UserRepositoryEloquent implements UserRepositoryInterface
 {
+    public function __construct(private UserFactoryEloquent $factory) {}
+
+    /**
+     * @throws Exception
+     */
     public function find(Identifier $id): ?UserEntity
     {
-        // TODO: Implement find() method.
-        return null;
+        $user = User::query()->where('uuid', $id->value)->first();
+
+        if ($user) {
+            $user = $this->factory->make($user);
+        }
+
+        return $user;
     }
 
     public function store(UserEntity $entity): void
