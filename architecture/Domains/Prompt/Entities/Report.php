@@ -11,12 +11,12 @@ class Report implements Stringable
 {
     public function __construct(
         public TranslatorServiceInterface $translator,
-        public string                     $translateKey,
-        public string                     $lang,
-        public string                     $person,
-        public string                     $task,
-        public string                     $description,
-        public string                     $spentTime,
+        public string $translateKey,
+        public string $lang,
+        public string $person,
+        public string $task,
+        public string $description,
+        public string $spentTime,
     ){}
 
     public function __toString(): string
