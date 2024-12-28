@@ -1,6 +1,6 @@
 <?php
 
-use App\Interfaces\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('private')->group(static function (): void {

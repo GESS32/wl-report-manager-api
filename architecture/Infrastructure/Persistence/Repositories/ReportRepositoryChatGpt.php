@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Architecture\Infrastructure\Report;
+namespace Architecture\Infrastructure\Persistence\Repositories;
 
 use Architecture\Domains\Prompt\Entities\Report;
 use Architecture\Domains\Prompt\Repositories\ReportRepositoryInterface;
@@ -13,8 +13,6 @@ class ReportRepositoryChatGpt implements ReportRepositoryInterface
 {
     public function send(Report $report): PromptResponse
     {
-        dd((string) $report);
-
         $response = OpenAI::chat()->create([
             'model' => config('openai.model'),
             'messages' => [

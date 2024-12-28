@@ -25,6 +25,7 @@ readonly class CreateService
     {
         $report = new Report(
             $this->translator,
+            $request->template,
             $request->lang,
             $request->user->getBio($this->localization, lang: $request->lang),
             $request->task,

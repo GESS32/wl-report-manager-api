@@ -7,12 +7,12 @@ namespace App\Providers;
 use Architecture\Application\Auth\GetUserService;
 use Architecture\Domains\Auth\Repositories\AuthRepositoryInterface;
 use Architecture\Domains\User\Entities\UserEntity;
-use Architecture\Infrastructure\Auth\AuthUserRepositoryJwtEloquent;
+use Architecture\Infrastructure\Persistence\Repositories\AuthUserRepositoryJwtEloquent;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
-class AuthInfrastructureProvider extends ServiceProvider implements DeferrableProvider
+class DomainAuthProvider extends ServiceProvider implements DeferrableProvider
 {
     public function register(): void
     {

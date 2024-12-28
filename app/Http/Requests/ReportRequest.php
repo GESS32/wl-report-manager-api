@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Interfaces\Http\Requests;
+namespace App\Http\Requests;
 
 use Architecture\Application\Report\RequestDto;
 use Architecture\Domains\User\Entities\UserEntity;
@@ -41,7 +41,8 @@ class ReportRequest extends FormRequest
             $this->request->get('task'),
             $this->request->get('description'),
             $this->request->get('time'),
-            $this->request->get('lang')
+            $this->request->get('lang'),
+            config('prompt.report.template'),
         );
     }
 }

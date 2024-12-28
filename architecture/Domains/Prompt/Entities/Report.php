@@ -11,6 +11,7 @@ class Report implements Stringable
 {
     public function __construct(
         public TranslatorInterface $translator,
+        public string $translateKey,
         public string $lang,
         public string $person,
         public string $task,
@@ -20,7 +21,7 @@ class Report implements Stringable
 
     public function __toString(): string
     {
-        return $this->translator->translate('prompt.report', [
+        return $this->translator->translate($this->translateKey, [
             'lang' => $this->lang,
             'person' => $this->person,
             'task' => $this->task,

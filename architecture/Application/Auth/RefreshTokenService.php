@@ -14,9 +14,9 @@ readonly class RefreshTokenService
     /**
      * @throws TokenExpiredException
      */
-    public function execute(): string
+    public function execute(string $token): string
     {
-        $token = $this->repository->refreshToken();
+        $token = $this->repository->refreshToken($token);
 
         if ($token === null) {
             throw new TokenExpiredException('Token expired, please login again');

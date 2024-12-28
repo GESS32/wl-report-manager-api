@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Architecture\Infrastructure\User;
+namespace Architecture\Infrastructure\Persistence\Repositories;
 
 use App\Models\User;
+use Architecture\Domains\User\Factories\UserFactoryFromArray;
 use Architecture\Domains\User\ValueObjects\Identifier;
 use Architecture\Domains\User\Entities\UserEntity;
 use Architecture\Domains\User\Repositories\UserRepositoryInterface;
@@ -12,7 +13,7 @@ use Exception;
 
 readonly class UserRepositoryEloquent implements UserRepositoryInterface
 {
-    public function __construct(private UserFactoryEloquent $factory) {}
+    public function __construct(private UserFactoryFromArray $factory) {}
 
     /**
      * @throws Exception
@@ -22,7 +23,7 @@ readonly class UserRepositoryEloquent implements UserRepositoryInterface
         $user = User::query()->where('uuid', $id->value)->first();
 
         if ($user) {
-            $user = $this->factory->make($user);
+            $user = $this->factory->make($user->toArray());
         }
 
         return $user;

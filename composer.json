@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.4",
+        "google-gemini-php/laravel": "^1.0",
         "laravel/framework": "^11.31",
         "openai-php/laravel": "^0.10.2",
         "ramsey/uuid": "^4.7",

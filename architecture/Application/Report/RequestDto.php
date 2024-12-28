@@ -13,6 +13,7 @@ readonly class RequestDto
         public string $task,
         public string $description,
         public string $spendTime,
-        public string $lang
+        public string $lang,
+        public string $template,
     ) {}
 }
