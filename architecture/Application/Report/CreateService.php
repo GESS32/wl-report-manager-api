@@ -6,16 +6,16 @@ namespace Architecture\Application\Report;
 
 use Architecture\Domains\Prompt\Entities\Report;
 use Architecture\Domains\Prompt\Repositories\ReportRepositoryInterface;
-use Architecture\Domains\Prompt\Translators\TranslatorInterface;
-use Architecture\Domains\User\Localizations\LocalizationInterface;
+use Architecture\Domains\Prompt\Services\TranslatorServiceInterface;
+use Architecture\Domains\User\Services\LocalizationServiceInterface;
 use RuntimeException;
 
 readonly class CreateService
 {
     public function __construct(
-        private ReportRepositoryInterface $repository,
-        private TranslatorInterface $translator,
-        private LocalizationInterface $localization
+        private ReportRepositoryInterface  $repository,
+        private TranslatorServiceInterface $translator,
+        private LocalizationServiceInterface $localization
     ) {}
 
     /**

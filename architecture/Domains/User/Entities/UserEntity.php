@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Architecture\Domains\User\Entities;
 
-use Architecture\Domains\User\Localizations\LocalizationInterface;
+use Architecture\Domains\User\Services\LocalizationServiceInterface;
 use Architecture\Domains\User\ValueObjects\Identifier;
 use Architecture\Domains\User\ValueObjects\Position;
 use Architecture\Domains\User\ValueObjects\Rank;
@@ -17,8 +17,11 @@ class UserEntity
         public Position $position,
     ) {}
 
-    public function getBio(LocalizationInterface $localization, string $separator = '. ', ?string $lang = null): string
-    {
+    public function getBio(
+        LocalizationServiceInterface $localization,
+        string $separator = '. ',
+        ?string $lang = null
+    ): string {
         return implode($separator, [
             $localization->translate($this->position, $lang),
             $localization->translate($this->rank, $lang),

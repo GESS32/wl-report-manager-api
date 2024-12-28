@@ -6,7 +6,7 @@ namespace Architecture\Domains\User\Factories;
 
 use Architecture\Domains\User\ValueObjects\Identifier;
 
-interface UserIdentifierFactoryInterface
+interface IdentifierFactoryInterface
 {
     public function make(): Identifier;
 }

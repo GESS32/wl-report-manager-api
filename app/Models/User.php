@@ -31,17 +31,6 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
-    /** @var string[] */
-    protected $fillable = [
-        'password',
-    ];
-
-    /** @var string[] */
-    protected $hidden = [
-        'id',
-        'password',
-    ];
-
     protected function casts(): array
     {
         return [

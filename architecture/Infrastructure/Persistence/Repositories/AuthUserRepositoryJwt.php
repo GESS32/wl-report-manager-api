@@ -6,17 +6,16 @@ namespace Architecture\Infrastructure\Persistence\Repositories;
 
 use App\Models\User;
 use Architecture\Domains\Auth\Entities\AuthEntity;
-use Architecture\Domains\Auth\Factories\AuthEntityFactoryFromArray;
+use Architecture\Domains\Auth\Factories\AuthEntityFactoryInterface;
 use Architecture\Domains\Auth\Repositories\AuthRepositoryInterface;
 use Architecture\Infrastructure\Adapters\AuthAdapterInterface;
 use Architecture\Infrastructure\Adapters\JwtAdapterInterface;
-use Illuminate\Support\Facades\Auth;
 use Throwable;
 
-readonly class AuthUserRepositoryJwtEloquent implements AuthRepositoryInterface
+readonly class AuthUserRepositoryJwt implements AuthRepositoryInterface
 {
     public function __construct(
-        private AuthEntityFactoryFromArray $factory,
+        private AuthEntityFactoryInterface $factory,
         private AuthAdapterInterface $auth,
         private JwtAdapterInterface $jwt,
     ) {}
@@ -30,15 +29,7 @@ readonly class AuthUserRepositoryJwtEloquent implements AuthRepositoryInterface
         $token = $this->jwt->attempt(['nickname' => $nickname, 'password' => $password]);
 
         if ($token) {
-            /** @var User $user */
-            $user = Auth::user();
-
-            $entity = $this->factory->make([
-                'uuid' => $user->uuid,
-                'nickname' => $user->nickname,
-                'password' => $user->password,
-                'permissions' => $user->permissions,
-            ]);
+            $entity = $this->factory->make($this->auth->user());
         }
 
         return $entity;
@@ -71,7 +62,9 @@ readonly class AuthUserRepositoryJwtEloquent implements AuthRepositoryInterface
 
         $entity = $this->jwt->authenticate($token);
 
-        return $entity ? $this->factory->make($entity) : null;
+        return $entity
+            ? $this->factory->make($entity)
+            : null;
     }
 
     public function save(AuthEntity $entity): void

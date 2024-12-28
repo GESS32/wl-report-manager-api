@@ -7,9 +7,11 @@ namespace Architecture\Domains\User\ValueObjects;
 use Architecture\Domains\User\Enums\GradeEnum;
 use Architecture\Domains\User\Enums\LettersCaseEnum;
 use Architecture\Domains\User\Exceptions\ExperienceInputException;
-use Architecture\Domains\User\Localizations\LocalizeGroupRequest;
-use Architecture\Domains\User\Localizations\LocalizeRequest;
-use Architecture\Domains\User\Localizations\TranslatableInterface;
+use Architecture\Domains\User\Entities\LocalizeGroupEntity;
+use Architecture\Domains\User\Entities\LocalizeEntity;
+use Architecture\Domains\User\Contracts\TranslatableInterface;
+use Architecture\Domains\User\Factories\LocalizeEntityFactory;
+use Architecture\Domains\User\Factories\LocalizeGroupEntityFactory;
 
 readonly class Rank implements TranslatableInterface
 {
@@ -27,9 +29,9 @@ readonly class Rank implements TranslatableInterface
         $this->experience = $experience;
     }
 
-    public function getLocalizeRequest(): LocalizeGroupRequest
+    public function getLocalizeGroup(): LocalizeGroupEntity
     {
-        $request = new LocalizeGroupRequest();
+        $request = LocalizeGroupEntityFactory::make();
 
         $request->add($this->getGradeRequest());
         $request->add($this->getExperienceRequest());
@@ -37,9 +39,9 @@ readonly class Rank implements TranslatableInterface
         return $request;
     }
 
-    private function getGradeRequest(): LocalizeRequest
+    private function getGradeRequest(): LocalizeEntity
     {
-        $request = new LocalizeRequest();
+        $request = LocalizeEntityFactory::make();
         $grade = $this->grade->value;
 
         $request->add('rank.grade_label', separator: ': ', case: LettersCaseEnum::UPPER_FIRST);
@@ -48,9 +50,9 @@ readonly class Rank implements TranslatableInterface
         return $request;
     }
 
-    private function getExperienceRequest(): LocalizeRequest
+    private function getExperienceRequest(): LocalizeEntity
     {
-        $request = new LocalizeRequest();
+        $request = LocalizeEntityFactory::make();
 
         $request->add('rank.experience', ['value' => $this->experience]);
 

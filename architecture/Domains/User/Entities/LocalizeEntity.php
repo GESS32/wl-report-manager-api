@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Architecture\Domains\User\Localizations;
+namespace Architecture\Domains\User\Entities;
 
 use Architecture\Domains\User\Enums\LettersCaseEnum;
 
-class LocalizeRequest
+class LocalizeEntity
 {
     public string $itemsSeparator = '';
     private array $items = [];
+
+    public function __construct(public readonly string $id) {}
 
     public function add(
         string $key,

@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace Architecture\Infrastructure\User;
 
 use Architecture\Domains\User\Enums\LettersCaseEnum;
-use Architecture\Domains\User\Localizations\LocalizationInterface;
-use Architecture\Domains\User\Localizations\TranslatableInterface;
+use Architecture\Domains\User\Services\LocalizationServiceInterface;
+use Architecture\Domains\User\Contracts\TranslatableInterface;
+use Architecture\Infrastructure\Adapters\TranslatorAdapterInterface;
 
-class LocalizationLaravel implements LocalizationInterface
+readonly class LocalizationServiceLaravel implements LocalizationServiceInterface
 {
+    public function __construct(private TranslatorAdapterInterface $translator) {}
+
     public function translate(TranslatableInterface $translatable, ?string $locale = null): string
     {
         $response = [];
-        $groupRequest = $translatable->getLocalizeRequest();
+        $groupRequest = $translatable->getLocalizeGroup();
 
         foreach ($groupRequest->getGroups() as $request) {
             $responsePart = [];
@@ -21,7 +24,7 @@ class LocalizationLaravel implements LocalizationInterface
             $loop = 1;
 
             foreach ($request->getItems() as $item) {
-                $translated = trans($item['key'], $item['replace'], $locale);
+                $translated = $this->translator->resolve($item['key'], $item['replace'], $locale);
 
                 $responsePart[] = match ($item['case']) {
                     LettersCaseEnum::UPPER => mb_strtoupper($translated),

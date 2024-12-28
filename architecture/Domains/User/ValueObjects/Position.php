@@ -8,9 +8,11 @@ use Architecture\Domains\User\Enums\LettersCaseEnum;
 use Architecture\Domains\User\Enums\ResponsibilitiesEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
 use Architecture\Domains\User\Enums\SpecializationEnum;
-use Architecture\Domains\User\Localizations\LocalizeGroupRequest;
-use Architecture\Domains\User\Localizations\LocalizeRequest;
-use Architecture\Domains\User\Localizations\TranslatableInterface;
+use Architecture\Domains\User\Entities\LocalizeGroupEntity;
+use Architecture\Domains\User\Entities\LocalizeEntity;
+use Architecture\Domains\User\Contracts\TranslatableInterface;
+use Architecture\Domains\User\Factories\LocalizeEntityFactory;
+use Architecture\Domains\User\Factories\LocalizeGroupEntityFactory;
 
 readonly class Position implements TranslatableInterface
 {
@@ -30,9 +32,9 @@ readonly class Position implements TranslatableInterface
         $this->responsibilities = array_map($filter, $responsibilities);
     }
 
-    public function getLocalizeRequest(): LocalizeGroupRequest
+    public function getLocalizeGroup(): LocalizeGroupEntity
     {
-        $request = new LocalizeGroupRequest();
+        $request = LocalizeGroupEntityFactory::make();
         $request->groupsSeparator = '. ';
 
         $request->add($this->getRoleRequest());
@@ -41,9 +43,9 @@ readonly class Position implements TranslatableInterface
         return $request;
     }
 
-    private function getRoleRequest(): LocalizeRequest
+    private function getRoleRequest(): LocalizeEntity
     {
-        $request = new LocalizeRequest();
+        $request = LocalizeEntityFactory::make();
         $role = $this->role->value;
         $specialization = $this->specialization->value;
 
@@ -58,9 +60,9 @@ readonly class Position implements TranslatableInterface
         return $request;
     }
 
-    private function getResponsibilitiesRequest(): LocalizeRequest
+    private function getResponsibilitiesRequest(): LocalizeEntity
     {
-        $request = new LocalizeRequest();
+        $request = LocalizeEntityFactory::make();
 
         $request->add('position.responsibilities_label', separator: ': ', case: LettersCaseEnum::UPPER_FIRST);
 

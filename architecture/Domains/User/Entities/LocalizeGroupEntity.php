@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Architecture\Domains\User\Localizations;
+namespace Architecture\Domains\User\Entities;
 
-class LocalizeGroupRequest
+class LocalizeGroupEntity
 {
     public string $groupsSeparator = ', ';
     private array $groups = [];
 
-    public function add(LocalizeRequest $localizeRequest): void
+    public function __construct(public readonly string $id) {}
+
+    public function add(LocalizeEntity $localizeRequest): void
     {
         $this->groups[] = $localizeRequest;
     }
 
     /**
-     * @return array|LocalizeRequest[]|array<LocalizeRequest>
+     * @return array|LocalizeEntity[]|array<LocalizeEntity>
      */
     public function getGroups(): array
     {
