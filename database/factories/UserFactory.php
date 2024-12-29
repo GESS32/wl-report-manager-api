@@ -8,6 +8,7 @@ use App\Models\User;
 use Architecture\Domains\User\Enums\GradeEnum;
 use Architecture\Domains\User\Enums\ResponsibilitiesEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
+use Architecture\Domains\User\Enums\SpecializationEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +26,11 @@ class UserFactory extends Factory
         $grades = array_map(static fn (GradeEnum $case): int => $case->value, GradeEnum::cases());
         $roles = array_map(static fn (RoleEnum $case): int => $case->value, RoleEnum::cases());
 
+        $specialization = array_map(
+            static fn (SpecializationEnum $case): int
+            => $case->value, SpecializationEnum::cases()
+        );
+
         $responsibilities = array_map(
             static fn (ResponsibilitiesEnum $case): int
             => $case->value, ResponsibilitiesEnum::cases()
@@ -36,6 +42,7 @@ class UserFactory extends Factory
             'password' => Hash::make('12345678'),
             'role' => $faker->randomElement($roles),
             'grade' => $faker->randomElement($grades),
+            'specialization' => $faker->randomElement($specialization),
             'experience' => $faker->randomFloat(1, max: 10),
             'responsibilities' => $faker->randomElements(
                 $responsibilities,

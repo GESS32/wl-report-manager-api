@@ -34,25 +34,31 @@
     cp .env.example .env
     ```
 
-7. Resolve permission issues:
+7. Set your [open AI variables](https://platform.openai.com/docs/quickstart) in the `.env` file:
+    ```dotenv
+    OPENAI_API_KEY={YOUR_OPENAI_API_KEY}
+    OPENAI_ORGANIZATION={YOUR_OPENAI_ORGANIZATION}
+    ```
+
+8. Resolve permission issues:
     ```shell
     sudo chmod -R 0755 storage
     sudo chmod -R 0755 bootstrap/cache
     ```
 
-8. Enter to the PHP container console:
+9. Enter to the PHP container console:
     ```shell
     make php-exec
     ```
 
-9. Install dependencies and generate app key:
-    ```shell
-    bash ./sh/php/setup.sh
-    ```
+10. Install dependencies and generate app key:
+     ```shell
+     bash ./sh/php/setup.sh
+     ```
 
-10. Add the following line to the `hosts` file:
+11. Add the following line to the `hosts` file:
      ```text
      127.0.0.1 local.wrm-backend.com
      ```
 
-11. Open the browser and go to the [local.wrm-backend.com](http://local.wrm-backend.com).
+12. Open the browser and go to the [local.wrm-backend.com](http://local.wrm-backend.com).

@@ -14,7 +14,7 @@ interface AuthRepositoryInterface
 
     public function getToken(): ?string;
 
-    public function refreshToken(): ?string;
+    public function refreshToken(string $token): ?string;
 
     public function get(string $token): ?AuthEntity;
 

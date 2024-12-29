@@ -7,32 +7,38 @@ namespace Architecture\Application\User;
 use Architecture\Domains\User\Entities\UserEntity;
 use Architecture\Domains\User\Enums\GradeEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
-use Architecture\Domains\User\Exceptions\ExperienceInputException;
-use Architecture\Domains\User\Factories\UserIdentifierFactoryInterface;
+use Architecture\Domains\User\Enums\SpecializationEnum;
+use Architecture\Domains\User\Factories\IdentifierFactoryInterface;
+use Architecture\Domains\User\Factories\UserFactoryInterface;
 use Architecture\Domains\User\Repositories\UserRepositoryInterface;
-use Architecture\Domains\User\ValueObjects\Position;
-use Architecture\Domains\User\ValueObjects\Rank;
+use Throwable;
 
 readonly class CreateService
 {
     public function __construct(
         private UserRepositoryInterface $repository,
-        private UserIdentifierFactoryInterface $factory
+        private IdentifierFactoryInterface $identifierFactory,
+        private UserFactoryInterface $userFactory
     ) {}
 
     /**
-     * @throws ExperienceInputException
+     * @throws Throwable
      */
     public function execute(
         GradeEnum $grade,
         RoleEnum $role,
+        SpecializationEnum $specialization,
         float $experience,
         array $responsibilities = []
     ): UserEntity {
-        $identifier = $this->factory->make();
-        $rank = new Rank($grade, $experience);
-        $position = new Position($role, $responsibilities);
-        $user = new UserEntity($identifier, $rank, $position);
+        $user = $this->userFactory->make([
+            'uuid' => $this->identifierFactory->make(),
+            'grade' => $grade,
+            'experience' => $experience,
+            'role' => $role,
+            'specialization' => $specialization,
+            'responsibilities' => $responsibilities,
+        ]);
 
         $this->repository->store($user);
 

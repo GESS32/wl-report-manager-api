@@ -2,6 +2,7 @@
 
 use Architecture\Domains\User\Enums\ResponsibilitiesEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
+use Architecture\Domains\User\Enums\SpecializationEnum;
 
 return [
     'role' => [
@@ -18,5 +19,13 @@ return [
         ResponsibilitiesEnum::MANAGER->value => 'manage projects',
         ResponsibilitiesEnum::SUPPORT->value => 'support applications',
         ResponsibilitiesEnum::TECH_LEAD->value => 'tech lead of project',
+        ResponsibilitiesEnum::LARAVEL->value => 'Laravel developing',
     ],
+    'specialization' => [
+        SpecializationEnum::JS->value => 'JavaScript',
+        SpecializationEnum::PHP->value => 'PHP',
+    ],
+
+    'role_label' => 'IT specialist',
+    'responsibilities_label' => 'his responsibilities includes',
 ];

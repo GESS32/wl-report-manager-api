@@ -13,4 +13,5 @@ enum ResponsibilitiesEnum: int
     case MANAGER = 5;
     case SUPPORT = 6;
     case TECH_LEAD = 7;
+    case LARAVEL = 8;
 }
