@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Architecture\Application\Registration;
 
-use Architecture\Application\Auth\Exceptions\InvalidCredentialsException;
 use Architecture\Application\Auth\SaveService;
 use Architecture\Application\Auth\SignInService;
 use Architecture\Application\User\CreateService;
-use Architecture\Domains\Auth\Exceptions\NicknameFormatException;
-use Architecture\Domains\Auth\Exceptions\NicknameLenException;
-use Architecture\Domains\Auth\Exceptions\PasswordFormatException;
-use Architecture\Domains\Auth\Exceptions\PasswordLenException;
-use Architecture\Domains\User\Exceptions\ExperienceInputException;
+use Throwable;
 
-readonly class Service
+readonly class Handler
 {
     public function __construct(
         private CreateService $userCreateService,
@@ -23,15 +18,14 @@ readonly class Service
     ) {}
 
     /**
-     * @throws NicknameFormatException|NicknameLenException
-     * @throws PasswordFormatException|ExperienceInputException|PasswordLenException
-     * @throws InvalidCredentialsException
+     * @throws Throwable
      */
-    public function execute(RequestDto $request): ResponseDto
+    public function execute(Command $request): ResponseDto
     {
         $user = $this->userCreateService->execute(
             $request->grade,
             $request->role,
+            $request->specialization,
             $request->experience,
             $request->responsibilities
         );

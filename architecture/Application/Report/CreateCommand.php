@@ -6,7 +6,7 @@ namespace Architecture\Application\Report;
 
 use Architecture\Domains\User\Entities\UserEntity;
 
-readonly class RequestDto
+class CreateCommand
 {
     public function __construct(
         public UserEntity $user,
