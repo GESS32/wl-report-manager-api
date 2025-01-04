@@ -1,4 +1,4 @@
-## Setup local environment
+# Setup local environment
 
 1. Go to the docker folder:
     ```shell
