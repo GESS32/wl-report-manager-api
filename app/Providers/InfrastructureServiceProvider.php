@@ -11,7 +11,7 @@ use Architecture\Infrastructure\Adapters\ConfigAdapterLaravel;
 use Architecture\Infrastructure\Adapters\JwtAdapterInterface;
 use Architecture\Infrastructure\Adapters\JwtAdapterLaravelTymon;
 use Architecture\Infrastructure\Adapters\TranslatorAdapterInterface;
-use Architecture\Infrastructure\Adapters\TranslatorLaravel;
+use Architecture\Infrastructure\Adapters\TranslatorAdapterLaravel;
 use Architecture\Infrastructure\Adapters\UuidAdapterInterface;
 use Architecture\Infrastructure\Adapters\UuidRamseyAdapter;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -25,7 +25,7 @@ class InfrastructureServiceProvider extends ServiceProvider implements Deferrabl
         $this->app->bind(UuidAdapterInterface::class, UuidRamseyAdapter::class);
         $this->app->bind(AuthAdapterInterface::class, AuthAdapterLaravel::class);
         $this->app->bind(ConfigAdapterInterface::class, ConfigAdapterLaravel::class);
-        $this->app->bind(TranslatorAdapterInterface::class, TranslatorLaravel::class);
+        $this->app->bind(TranslatorAdapterInterface::class, TranslatorAdapterLaravel::class);
     }
 
     public function provides(): array

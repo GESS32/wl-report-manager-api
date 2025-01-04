@@ -2,34 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Architecture\Application\Auth;
+namespace Architecture\Domains\Auth\Factories;
 
 use Architecture\Domains\Auth\Entities\AuthEntity;
 use Architecture\Domains\Auth\Exceptions\NicknameFormatException;
 use Architecture\Domains\Auth\Exceptions\NicknameLenException;
 use Architecture\Domains\Auth\Exceptions\PasswordFormatException;
 use Architecture\Domains\Auth\Exceptions\PasswordLenException;
-use Architecture\Domains\Auth\Repositories\AuthRepositoryInterface;
 use Architecture\Domains\Auth\ValueObjects\Nickname;
 use Architecture\Domains\Auth\ValueObjects\Password;
-use Architecture\Domains\User\Entities\UserEntity;
+use Architecture\Domains\Auth\ValueObjects\Permission;
 
-readonly class SaveService
+class AuthEntityFactoryStrict implements AuthEntityFactoryInterface
 {
-    public function __construct(private AuthRepositoryInterface $authRepository) {}
-
     /**
      * @throws NicknameFormatException|NicknameLenException
      * @throws PasswordFormatException|PasswordLenException
      */
-    public function execute(UserEntity $user, string $nickname, string $password): AuthEntity
+    public function make(array $payload): AuthEntity
     {
-        $nickname = new Nickname($nickname);
-        $password = new Password($password);
-        $auth = new AuthEntity($user->id->value, $nickname, $password);
+        $entity = new AuthEntity(
+            $payload['uuid'],
+            new Nickname($payload['nickname']),
+            new Password($payload['password']),
+        );
 
-        $this->authRepository->save($auth);
+        foreach ($payload['permissions'] ?? [] as $key => $description) {
+            $entity->permissions->assign(new Permission($key, $description));
+        }
 
-        return $auth;
+        return $entity;
     }
 }

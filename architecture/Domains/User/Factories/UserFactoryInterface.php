@@ -8,5 +8,5 @@ use Architecture\Domains\User\Entities\UserEntity;
 
 interface UserFactoryInterface
 {
-    public function make(mixed $request): UserEntity;
+    public function make(array $request): UserEntity;
 }

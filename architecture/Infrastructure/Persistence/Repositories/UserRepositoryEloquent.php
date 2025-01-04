@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Architecture\Infrastructure\Persistence\Repositories;
 
 use App\Models\User;
-use Architecture\Domains\User\Factories\UserFactoryFromArray;
+use Architecture\Domains\User\Factories\UserFactoryInterface;
 use Architecture\Domains\User\ValueObjects\Identifier;
 use Architecture\Domains\User\Entities\UserEntity;
 use Architecture\Domains\User\Repositories\UserRepositoryInterface;
-use Exception;
+use Throwable;
 
 readonly class UserRepositoryEloquent implements UserRepositoryInterface
 {
-    public function __construct(private UserFactoryFromArray $factory) {}
+    public function __construct(private UserFactoryInterface $factory) {}
 
     /**
-     * @throws Exception
+     * @throws Throwable
      */
     public function find(Identifier $id): ?UserEntity
     {

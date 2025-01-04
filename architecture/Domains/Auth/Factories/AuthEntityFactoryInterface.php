@@ -8,5 +8,5 @@ use Architecture\Domains\Auth\Entities\AuthEntity;
 
 interface AuthEntityFactoryInterface
 {
-    public function make(mixed $payload): AuthEntity;
+    public function make(array $payload): AuthEntity;
 }

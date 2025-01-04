@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Architecture\Application\Auth\LoginCommand;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -16,13 +17,11 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    public function getNicknameAttribute(): string
+    public function toCommand(): LoginCommand
     {
-        return $this->request->get('nickname');
-    }
-
-    public function getPasswordAttribute(): string
-    {
-        return $this->request->get('password');
+        return new LoginCommand(
+            $this->request->get('nickname'),
+            $this->request->get('password'),
+        );
     }
 }

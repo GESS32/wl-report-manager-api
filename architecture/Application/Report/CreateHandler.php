@@ -10,10 +10,10 @@ use Architecture\Domains\Prompt\Services\TranslatorServiceInterface;
 use Architecture\Domains\User\Services\LocalizationServiceInterface;
 use RuntimeException;
 
-readonly class CreateService
+readonly class CreateHandler
 {
     public function __construct(
-        private ReportRepositoryInterface  $repository,
+        private ReportRepositoryInterface $repository,
         private TranslatorServiceInterface $translator,
         private LocalizationServiceInterface $localization
     ) {}
@@ -21,7 +21,7 @@ readonly class CreateService
     /**
      * @throws RuntimeException
      */
-    public function execute(RequestDto $request): string
+    public function execute(CreateCommand $request): string
     {
         $report = new Report(
             $this->translator,

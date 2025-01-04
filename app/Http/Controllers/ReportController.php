@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ReportRequest;
+use App\Http\Requests\ReportCreateRequest;
 use App\Http\Resources\ReportResource;
-use Architecture\Application\Report\CreateService;
+use Architecture\Application\Report\CreateHandler;
 use Architecture\Domains\User\Entities\UserEntity;
 use Illuminate\Routing\Controller;
 
 class ReportController extends Controller
 {
-    public function store(ReportRequest $request, UserEntity $user, CreateService $service): ReportResource
+    public function store(ReportCreateRequest $request, UserEntity $user, CreateHandler $handler): ReportResource
     {
-        $response = $service->execute($request->toDto($user));
+        $response = $handler->execute($request->toCommand($user));
         return new ReportResource($response);
     }
 }

@@ -9,18 +9,18 @@ use Architecture\Domains\User\Enums\GradeEnum;
 use Architecture\Domains\User\Enums\RoleEnum;
 use Architecture\Domains\User\Enums\SpecializationEnum;
 use Architecture\Domains\User\Exceptions\ExperienceInputException;
+use Architecture\Domains\User\Exceptions\IdentifierInputException;
 use Architecture\Domains\User\ValueObjects\Identifier;
 use Architecture\Domains\User\ValueObjects\Position;
 use Architecture\Domains\User\ValueObjects\Rank;
-use Exception;
+use ValueError;
 
-class UserFactoryFromArray implements UserFactoryInterface
+class UserFactoryStrict implements UserFactoryInterface
 {
     /**
-     * @throws ExperienceInputException
-     * @throws Exception
+     * @throws ExperienceInputException|IdentifierInputException|ValueError
      */
-    public function make(mixed $request): UserEntity
+    public function make(array $request): UserEntity
     {
         $id = new Identifier($request['uuid']);
         $grade = GradeEnum::from($request['grade']);

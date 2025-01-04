@@ -6,7 +6,7 @@ namespace Architecture\Application\Auth;
 
 use Architecture\Domains\Auth\Repositories\AuthRepositoryInterface;
 
-readonly class LogoutService
+readonly class LogoutHandler
 {
     public function __construct(private AuthRepositoryInterface $repository) {}
 

@@ -7,16 +7,16 @@ namespace Architecture\Application\Auth;
 use Architecture\Application\Auth\Exceptions\TokenExpiredException;
 use Architecture\Domains\Auth\Repositories\AuthRepositoryInterface;
 
-readonly class RefreshTokenService
+readonly class RefreshTokenHandler
 {
     public function __construct(private AuthRepositoryInterface $repository) {}
 
     /**
      * @throws TokenExpiredException
      */
-    public function execute(string $token): string
+    public function execute(RefreshTokenCommand $command): string
     {
-        $token = $this->repository->refreshToken($token);
+        $token = $this->repository->refreshToken($command->token);
 
         if ($token === null) {
             throw new TokenExpiredException('Token expired, please login again');

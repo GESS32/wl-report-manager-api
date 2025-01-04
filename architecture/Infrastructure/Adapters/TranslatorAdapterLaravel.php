@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Architecture\Infrastructure\Adapters;
 
-class TranslatorLaravel implements TranslatorAdapterInterface
+class TranslatorAdapterLaravel implements TranslatorAdapterInterface
 {
     public function resolve(string $key, array $replace = [], ?string $locale = null): string|array
     {
