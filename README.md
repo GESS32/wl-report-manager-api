@@ -21,6 +21,11 @@
 ### AI clients:
 * [openai-php/laravel:^0.10.2](https://github.com/openai-php/laravel)
 * [google-gemini-php/laravel:^1.0](https://github.com/google-gemini-php/laravel)
+### Dev tools:
+* [nunomaduro/collision":^8.1](https://github.com/nunomaduro/collision)
+* [fakerphp/faker":^1.23](https://fakerphp.org/)
+* [mockery/mockery":^1.6](https://github.com/mockery/mockery)
+* [phpunit/phpunit":^11.0.1](https://phpunit.de/index.html)
 
 ---
 
@@ -32,3 +37,5 @@
 
 ## Wiki
 * [Deploy project to a local environment](./wiki/setup-local-environment.md)
+* [Seed database with test data](./wiki/seed-database.md)
+* [Run tests](./wiki/tests.md)

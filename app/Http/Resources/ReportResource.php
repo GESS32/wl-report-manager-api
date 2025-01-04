@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReportResource extends JsonResource
 {
-    /** @var string */
-    public $resource;
-
-    public function toArray(Request $request): array
+    public function __construct(string $resource)
     {
-        $payload = explode('----', $this->resource);
+        $payload = explode('----', $resource);
 
-        return [
+        parent::__construct([
             'report' => trim(array_shift($payload)),
             'estimation' => trim(array_pop($payload)),
-        ];
+        ]);
     }
 }

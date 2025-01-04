@@ -14,6 +14,9 @@ Route::prefix('public')->group(static function (): void {
     /** @see routes/api/resources/profile.php */
     Route::prefix('profile')->group(base_path('routes/api/resources/profile.php'));
 
+    /** @see routes/api/resources/term.php */
+    Route::prefix('term')->group(base_path('routes/api/resources/term.php'));
+
     Route::middleware('auth:api')->group(static function (): void {
         Route::post('report', [ReportController::class, 'store']);
     });
