@@ -7,9 +7,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Architecture\Application\Auth\Exceptions\InvalidCredentialsException;
 use Architecture\Application\Auth\Exceptions\TokenExpiredException;
-use Architecture\Application\Auth\LoginService;
-use Architecture\Application\Auth\LogoutService;
-use Architecture\Application\Auth\RefreshTokenService;
+use Architecture\Application\Auth\LoginHandler;
+use Architecture\Application\Auth\LogoutHandler;
+use Architecture\Application\Auth\RefreshTokenCommand;
+use Architecture\Application\Auth\RefreshTokenHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -17,17 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request, LoginService $service): JsonResponse
+    public function login(LoginRequest $request, LoginHandler $handler): JsonResponse
     {
         $response = new JsonResponse();
 
         try {
-            $auth = $service->execute(
-                $request->getNicknameAttribute(),
-                $request->getPasswordAttribute()
-            );
-
-            $response->setData(['token' => $auth->token]);
+            $auth = $handler->execute($request->toCommand());
+            $response->setData(['token' => $auth->token->value]);
         } catch (InvalidCredentialsException $exception) {
             $response->setStatusCode(Response::HTTP_UNAUTHORIZED, $exception->getMessage());
         }
@@ -35,12 +32,13 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function refresh(Request $request, RefreshTokenService $service): JsonResponse
+    public function refresh(Request $request, RefreshTokenHandler $handler): JsonResponse
     {
         $response = new JsonResponse();
+        $command = new RefreshTokenCommand($request->bearerToken());
 
         try {
-            $token = $service->execute($request->bearerToken());
+            $token = $handler->execute($command);
             $response->setData(['token' => $token]);
         } catch (TokenExpiredException $exception) {
             $response->setStatusCode(Response::HTTP_UNAUTHORIZED, $exception->getMessage());
@@ -49,9 +47,9 @@ class AuthController extends Controller
         return $response;
     }
 
-    public function logout(LogoutService $service): JsonResponse
+    public function logout(LogoutHandler $handler): JsonResponse
     {
-        $service->execute();
+        $handler->execute();
         return new JsonResponse();
     }
 }

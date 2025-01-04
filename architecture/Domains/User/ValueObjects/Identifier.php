@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace Architecture\Domains\User\ValueObjects;
 
 use Architecture\Domains\User\Exceptions\IdentifierInputException;
-use Exception;
 
 readonly class Identifier
 {
     public string|int $value;
 
     /**
-     * @throws Exception
+     * @throws IdentifierInputException
      */
     public function __construct(string|int $value)
     {
@@ -27,7 +26,7 @@ readonly class Identifier
         $this->value = $value;
     }
 
-    private function doStringValidation(string $value): ?Exception
+    private function doStringValidation(string $value): ?IdentifierInputException
     {
         $valueLen = strlen($value);
 
@@ -38,7 +37,7 @@ readonly class Identifier
         };
     }
 
-    private function doIntValidation(int $value): ?Exception
+    private function doIntValidation(int $value): ?IdentifierInputException
     {
         return match (true) {
             $value < 0 => new IdentifierInputException('Identifier cannot be negative'),

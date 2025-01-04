@@ -10,6 +10,6 @@ readonly class AuthenticatedDto
 {
     public function __construct(
         public AuthEntity $entity,
-        public string $token,
+        public TokenDto $token,
     ) {}
 }

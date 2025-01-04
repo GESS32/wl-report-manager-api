@@ -9,7 +9,7 @@ use Architecture\Domains\User\Entities\UserEntity;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ReportRequest extends FormRequest
+class ReportCreateRequest extends FormRequest
 {
     public function rules(): array
     {
@@ -34,7 +34,7 @@ class ReportRequest extends FormRequest
         ];
     }
 
-    public function toDto(UserEntity $user): CreateCommand
+    public function toCommand(UserEntity $user): CreateCommand
     {
         return new CreateCommand(
             $user,

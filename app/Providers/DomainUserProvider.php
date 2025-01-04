@@ -6,7 +6,7 @@ namespace App\Providers;
 
 use Architecture\Domains\User\Factories\IdentifierFactoryFromProvider;
 use Architecture\Domains\User\Factories\IdentifierFactoryInterface;
-use Architecture\Domains\User\Factories\UserFactoryFromArray;
+use Architecture\Domains\User\Factories\UserFactoryStrict;
 use Architecture\Domains\User\Factories\UserFactoryInterface;
 use Architecture\Domains\User\Services\LocalizationServiceInterface;
 use Architecture\Domains\User\Providers\IdentifierProviderInterface;
@@ -25,7 +25,7 @@ class DomainUserProvider extends ServiceProvider implements DeferrableProvider
         $this->app->bind(LocalizationServiceInterface::class, LocalizationServiceLaravel::class);
         $this->app->bind(IdentifierProviderInterface::class, UserIdentifierProviderUuid::class);
         $this->app->bind(IdentifierFactoryInterface::class, IdentifierFactoryFromProvider::class);
-        $this->app->bind(UserFactoryInterface::class, UserFactoryFromArray::class);
+        $this->app->bind(UserFactoryInterface::class, UserFactoryStrict::class);
     }
 
     public function provides(): array
